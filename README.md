@@ -51,6 +51,22 @@ Don't forget to configure the *.properties files with your own information such 
 - Open directory: DockerRaspberryPi
 - Execute command: docker-compose up
 
+### Run the application
+- Create a JAR file
+    ```bash
+    mvn package
+    ```
+- Run the application on the Raspberry Pi
+    ```bash
+    java -jar *.jar
+    ```
+- Run the application on the Raspberry Pi in the background so you can close the shell
+    ```bash
+    nohup java -jar *.jar > log.txt 2>&1 &
+    ```
+
+    
+
 ## InfluxDB
 Some more information, not directly needed to work with the example.
 ### Connect to the database
