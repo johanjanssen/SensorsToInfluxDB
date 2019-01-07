@@ -15,7 +15,7 @@ sudo apt-get install wiringpi
 
 # Install Java 8
 # For now since Pi4J has issues on 11
-sudo apt-get install openjdk-8-jdk -y
+sudo apt-get install oracle-java8-jdk -y
 
 # Install Java 11
 #wget https://github.com/bell-sw/Liberica/releases/download/11.0.1/bellsoft-jdk11.0.1-linux-arm32-vfp-hflt.tar.gz
@@ -29,13 +29,14 @@ sudo tar xzvf apache-maven-3.6.0-bin.tar.gz -C /opt
 export PATH=/opt/apache-maven-3.6.0/bin:$PATH
 
 # Install Docker
-sudo groupadd docker
 curl -fsSL get.docker.com -o get-docker.sh && sh get-docker.sh
 rm get-docker.sh
 
 # Adding the current user to the docker group so sudo is no longer needed to run docker commands
+sudo groupadd docker
 sudo gpasswd -a $USER docker
-newgrp docker
+newgrp docker << END
+END
 
 # Install Docker Compose
 sudo apt-get install python-pip -y
