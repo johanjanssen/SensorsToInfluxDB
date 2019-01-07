@@ -46,6 +46,7 @@ Don't forget to configure the *.properties files with your own information such 
     ```bash
     sh installScript.sh
     ```
+- After a logout and login you can use docker without sudo 
 
 ### Start Docker containers with InfluxDB, Chronograf and Grafana
 - Open directory: DockerRaspberryPi
