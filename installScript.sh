@@ -29,6 +29,7 @@ sudo tar xzvf apache-maven-3.6.0-bin.tar.gz -C /opt
 export PATH=/opt/apache-maven-3.6.0/bin:$PATH
 
 # Install Docker
+sudo groupadd docker
 curl -fsSL get.docker.com -o get-docker.sh && sh get-docker.sh
 rm get-docker.sh
 
