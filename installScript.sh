@@ -42,7 +42,7 @@ sudo pip install docker-compose
 
 # Download project
 sudo apt-get install git -y
-git clone
+git clone https://github.com/johanjanssen/SensorsToInfluxDB.git
 
 # Pre build the project so the Maven dependencies are downloaded
 cd SensorsToInfluxDB
