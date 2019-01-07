@@ -1,0 +1,33 @@
+version: '3'
+services:
+  influxdb:
+    image: influxdb:1.7
+    container_name: influxdb
+    volumes:
+      - influxdb-data:/var/lib/influxdb
+      - influxdb-config:/var/lib/influxdb
+    ports:
+      - "8086:8086"
+      - "8082:8082"
+      - "8089:8089"
+  
+  chronograf:
+    image: chronograf:1.7
+    volumes:
+      - chronograf-data:/var/lib/chronograf
+    ports:
+      - "8888:8888"
+      
+  grafana:
+    image: fg2it/grafana-armhf:v5.1.4
+    volumes:
+      - grafana-data:/var/lib/grafana
+    ports:
+      - "3000:3000"
+      
+volumes:
+  influxdb-data:
+  influxdb-config:
+  chronograf-data:
+  grafana-data:
+  
