@@ -42,17 +42,36 @@ Don't forget to configure the *.properties files with your own information such 
 
 ### Install the necessary software
 - Copy the installScript.sh to the Raspberry Pi
+- Make the script executable
+    ```bash
+    chmod +x installScript.sh
+    ```
 - Execute the script: 
     ```bash
-    sh installScript.sh
+    ./installScript.sh
     ```
-- After a logout and login you can use docker without sudo 
+- After a logout and login you can use docker without sudo and Maven is on the PATH
+- If you don't want to logout, execute the following commands to achieve the same result:
+    ```bash
+    source /etc/profile
+    newgrp docker
+    ```
 
 ### Start Docker containers with InfluxDB, Chronograf and Grafana
-- Open directory: DockerRaspberryPi
-- Execute command: docker-compose up
+- Open directory: SensorsToInfluxDB/DockerRaspberryPi
+- Start the Docker containers: docker-compose up
+    ```bash
+    docker-compose up
+    ```
+- Start the Docker containers detached in the background: docker-compose up -d
+    ```bash
+    docker-compose up -d
+    ```
+
 
 ### Run the application
+- ***Don't forget to configure the *.properties files with your own information such as IP addresses and bluetooth addresses.***
+- Open directory: SensorsToInfluxDB
 - Create a JAR file
     ```bash
     mvn package

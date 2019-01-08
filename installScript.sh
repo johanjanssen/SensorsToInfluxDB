@@ -5,12 +5,6 @@ sudo apt-get update
 sudo apt-get install -y i2c-tools -y
 
 # Compile and install WiringPi for Pi4J
-# WORKS
-#sudo apt-get install git-core -y
-#git clone git://git.drogon.net/wiringPi
-#cd ~/wiringPi
-#./build
-# HAVE TO TEST:
 sudo apt-get install wiringpi
 
 # Install Java 8
@@ -26,7 +20,7 @@ sudo apt-get install oracle-java8-jdk -y
 # Install Maven
 wget http://apache.40b.nl/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz
 sudo tar xzvf apache-maven-3.6.0-bin.tar.gz -C /opt
-export PATH=/opt/apache-maven-3.6.0/bin:$PATH
+echo "export PATH=/opt/apache-maven-3.6.0/bin:$PATH" | sudo tee /etc/profile
 
 # Install Docker
 curl -fsSL get.docker.com -o get-docker.sh && sh get-docker.sh
@@ -35,8 +29,6 @@ rm get-docker.sh
 # Adding the current user to the docker group so sudo is no longer needed to run docker commands
 sudo groupadd docker
 sudo gpasswd -a $USER docker
-newgrp docker << END
-END
 
 # Install Docker Compose
 sudo apt-get install python-pip -y
