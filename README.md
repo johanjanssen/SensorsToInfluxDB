@@ -27,12 +27,12 @@ Don't forget to configure the *.properties files with your own information such 
 - *** If you don't configure WIFI then you need to change the code as it looks for an IP address from the wlan0 interface ***
 - Connect the Raspberry Pi with a LAN cable
 - Add the WIFI router credentials to /etc/wpa_supplicant/wpa_supplicant.conf
-        ```bash
-        network={
-            ssid="[routername]"
-            psk="[WPA password]"
-        }
-        ```
+    ```bash
+    network={
+        ssid="[routername]"
+        psk="[WPA password]"
+    }
+    ```
 
 ### Enabling I<sup>2</sup>C for BME 280
 - Enable the I<sup>2</sup>C interface
