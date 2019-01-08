@@ -20,6 +20,7 @@ sudo apt-get install oracle-java8-jdk -y
 # Install Maven
 wget http://apache.40b.nl/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz
 sudo tar xzvf apache-maven-3.6.0-bin.tar.gz -C /opt
+export PATH=/opt/apache-maven-3.6.0/bin:$PATH
 echo "export PATH=/opt/apache-maven-3.6.0/bin:$PATH" | sudo tee /etc/profile
 
 # Install Docker
