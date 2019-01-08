@@ -46,4 +46,4 @@ mvn package
 # Pre download Docker images
 cd DockerRaspberryPi
 sudo docker-compose pull
-sudo docker-compose up
+sudo docker-compose up -d
