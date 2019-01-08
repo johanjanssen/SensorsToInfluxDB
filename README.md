@@ -23,7 +23,8 @@ Don't forget to configure the *.properties files with your own information such 
 - Install Raspbian on a Micro SD card
 - Enable SSH by placing a file called 'ssh' without extension on the boot (smaller) partition of the SD card
 
-### Optional configure WIFI
+### Configure WIFI
+- *** If you don't configure WIFI then you need to change the code as it looks for an IP address from the wlan0 interface ***
 - Connect the Raspberry Pi with a LAN cable
 - Add the WIFI router credentials to /etc/wpa_supplicant/wpa_supplicant.conf
         ```bash
