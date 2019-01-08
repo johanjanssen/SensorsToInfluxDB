@@ -59,12 +59,13 @@ Don't forget to configure the *.properties files with your own information such 
     ```
 
 ### Start Docker containers with InfluxDB, Chronograf and Grafana
+- Started by default, so only needed if something goes wrong.
 - Open directory: SensorsToInfluxDB/DockerRaspberryPi
-- Start the Docker containers: docker-compose up
+- Start the Docker containers:
     ```bash
     docker-compose up
     ```
-- Start the Docker containers detached in the background: docker-compose up -d
+- Start the Docker containers detached in the background:
     ```bash
     docker-compose up -d
     ```
@@ -77,14 +78,15 @@ Don't forget to configure the *.properties files with your own information such 
     ```bash
     mvn package
     ```
-- Run the application on the Raspberry Pi
-    ```bash
-    java -jar *.jar
-    ```
-- Run the application on the Raspberry Pi in the background so you can close the shell
-    ```bash
-    nohup java -jar *.jar > log.txt 2>&1 &
-    ```
+- Open directory: target
+    - Run the application on the Raspberry Pi
+        ```bash
+        java -jar *.jar
+        ```
+    - Run the application on the Raspberry Pi in the background so you can close the shell
+        ```bash
+        nohup java -jar *.jar > log.txt 2>&1 &
+        ```
 
     
 
