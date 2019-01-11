@@ -1,14 +1,11 @@
 package com.example.configuration;
 
 import org.influxdb.InfluxDB;
-import org.influxdb.dto.BatchPoints;
+import org.influxdb.InfluxDBFactory;
 import org.influxdb.dto.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import javax.annotation.PostConstruct;
 
 @Configuration
 public class InfluxDBPlainConfiguration {
@@ -16,19 +13,19 @@ public class InfluxDBPlainConfiguration {
 	@Value("${influxdb.javaclient.database}")
 	private String databaseName;
 
-	@Autowired
-	private InfluxDB influxDB;
+	@Value("${spring.influx.url}")
+	private String influxDBURL;
 
-	@PostConstruct
-	public void createDatabase() {
+	/**
+	 * Wrap InfluxDB so this can be used for plain InfluxDB interaction and isn't used for the InfluxDBTemplate.
+	 */
+	@Bean
+	public PlainInfluxDB initializePlainInfluxDB() {
+		InfluxDB influxDB = InfluxDBFactory.connect(influxDBURL, "root", "root");
 		Query createDatabaseQuery = new Query("CREATE DATABASE " + databaseName, databaseName);
 		influxDB.query(createDatabaseQuery);
+		influxDB.setDatabase(databaseName);
+		PlainInfluxDB plainInfluxDB = new PlainInfluxDB(influxDB);
+		return plainInfluxDB;
 	}
-
-	@Bean
-	public BatchPoints createBatchPoints() {
-		return BatchPoints.database(databaseName).consistency(InfluxDB.ConsistencyLevel.ALL)
-				.build();
-	}
-
 }

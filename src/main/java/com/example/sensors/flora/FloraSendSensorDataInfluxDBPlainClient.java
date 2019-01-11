@@ -2,8 +2,8 @@ package com.example.sensors.flora;
 
 import com.example.baseclasses.SendSensorData;
 import com.example.configuration.HOSTConfiguration;
+import com.example.configuration.PlainInfluxDB;
 import org.influxdb.InfluxDB;
-import org.influxdb.dto.BatchPoints;
 import org.influxdb.dto.Point;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,10 +14,7 @@ import java.util.concurrent.TimeUnit;
 public class FloraSendSensorDataInfluxDBPlainClient implements SendSensorData<FloraSensorData> {
 
 	@Autowired
-	private InfluxDB influxDB;
-	
-	@Autowired
-	private BatchPoints batchPoints;
+	private PlainInfluxDB plainInfluxDB;
 
 	@Autowired
 	private HOSTConfiguration hostConfiguration;
@@ -61,11 +58,12 @@ public class FloraSendSensorDataInfluxDBPlainClient implements SendSensorData<Fl
 				.tag("sensor", sensorName)
 				.addField("value", sensorData.getMoisture())
 				.build();
-		batchPoints.point(temperaturePoint);
-		batchPoints.point(batteryLevelPoint);
-		batchPoints.point(luxPoint);
-		batchPoints.point(conductivityPoint);
-		batchPoints.point(moisturePoint);
-		influxDB.write(batchPoints);
+
+		InfluxDB influxDB = plainInfluxDB.getInfluxDB();
+		influxDB.write(temperaturePoint);
+		influxDB.write(batteryLevelPoint);
+		influxDB.write(luxPoint);
+		influxDB.write(conductivityPoint);
+		influxDB.write(moisturePoint);
 	}
 }

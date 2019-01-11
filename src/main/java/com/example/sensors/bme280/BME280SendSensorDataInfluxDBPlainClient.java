@@ -2,8 +2,8 @@ package com.example.sensors.bme280;
 
 import com.example.baseclasses.SendSensorData;
 import com.example.configuration.HOSTConfiguration;
+import com.example.configuration.PlainInfluxDB;
 import org.influxdb.InfluxDB;
-import org.influxdb.dto.BatchPoints;
 import org.influxdb.dto.Point;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,10 +14,7 @@ import java.util.concurrent.TimeUnit;
 public class BME280SendSensorDataInfluxDBPlainClient implements SendSensorData<BME280SensorData> {
 
 	@Autowired
-	private InfluxDB influxDB;
-	
-	@Autowired
-	private BatchPoints batchPoints;
+	private PlainInfluxDB plainInfluxDB;
 
 	@Autowired
 	private HOSTConfiguration hostConfiguration;
@@ -42,9 +39,11 @@ public class BME280SendSensorDataInfluxDBPlainClient implements SendSensorData<B
 				.tag("host", hostIpAddress)
 				.tag("sensor", sensorName)
 				.addField("value", sensorData.getPressure()).build();
-		batchPoints.point(temperaturePoint);
-		batchPoints.point(humidityPoint);
-		batchPoints.point(pressurePoint);
-		influxDB.write(batchPoints);
+
+		InfluxDB influxDB = plainInfluxDB.getInfluxDB();
+		influxDB.write(temperaturePoint);
+		influxDB.write(humidityPoint);
+		influxDB.write(pressurePoint);
+
 	}
 }

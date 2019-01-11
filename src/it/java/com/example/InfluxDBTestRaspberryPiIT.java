@@ -30,11 +30,11 @@ public class InfluxDBTestRaspberryPiIT {
 
     private String databaseNameSpringTemplate = "SpringTemplateSensorData";
 
-    private int numberOfResultsExpected = 0;
+    private int numberOfResultsExpected = 2;
 
     @Before
     public void connectDatabase() {
-        influxDB = InfluxDBFactory.connect("http://" + InfluxDBConfiguration.ipAddress + ":8086", "root", "root");
+        influxDB = InfluxDBFactory.connect("http://" + InfluxDBConfiguration.ipAddressRaspberryPi + ":8086", "root", "root");
 
     }
 
