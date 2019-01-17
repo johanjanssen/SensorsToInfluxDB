@@ -1,4 +1,4 @@
-package com.example.sensors.bme280;
+package com.example.sensors.raspberrypi;
 
 
 import com.example.configuration.HOSTConfiguration;
@@ -24,10 +24,10 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest
 @TestPropertySource(locations= "classpath:application-test.properties")
 @ActiveProfiles("integration-test")
-public class BME280SendSensorDataInfluxDBClientIT {
+public class RaspberryPiSendSensorDataInfluxDBClientIT {
 
     @Autowired
-    private BME280SendSensorDataInfluxDBClient bme280SendSensorDataInfluxDBClient;
+    private RaspberryPiSendSensorDataInfluxDBClient raspberryPiSendSensorDataInfluxDBClient;
 
     @Autowired
     private InfluxDBTemplate<Point> influxDBTemplate;
@@ -51,41 +51,36 @@ public class BME280SendSensorDataInfluxDBClientIT {
     public void testSend() {
         assertEquals("testsensordata", influxDBTemplate.getDatabase());
 
-        BME280SensorData bme280SensorData = new BME280SensorData(23.0, 2.1, 23423.4);
-        bme280SendSensorDataInfluxDBClient.send(bme280SensorData);
+        RaspberryPiSensorData raspberryPiSensorData = new RaspberryPiSensorData(23.4);
+        raspberryPiSendSensorDataInfluxDBClient.send(raspberryPiSensorData);
 
 
-        final Query q = new Query("SELECT * FROM ambient_temperature GROUP BY host, sensor", influxDBTemplate.getDatabase());
+        final Query q = new Query("SELECT * FROM cpu_temperature GROUP BY host, sensor", influxDBTemplate.getDatabase());
         QueryResult queryResult = influxDBTemplate.query(q);
-
-        System.out.println(queryResult);
 
         QueryResult.Series series = queryResult.getResults().get(0).getSeries().get(0);
 
-
-
-        assertEquals("ambient_temperature", series.getName());
+        assertEquals("cpu_temperature", series.getName());
         assertEquals(hostConfiguration.retrieveHOSTIPAddress(), series.getTags().get("host"));
-        assertEquals("BME280SensorData", series.getTags().get("sensor"));
-
+        assertEquals("RaspberryPiSensorData", series.getTags().get("sensor"));
         assertEquals("time", series.getColumns().get(0));
         assertEquals("value", series.getColumns().get(1));
 
-        assertEquals(23.0, series.getValues().get(0).get(1));
+        assertEquals(23.4, series.getValues().get(0).get(1));
     }
 
     @Test
     public void testQueryResultToPOJO() {
-        BME280SensorData bme280SensorData = new BME280SensorData(23.0, 2.1, 23423.4);
-        bme280SendSensorDataInfluxDBClient.send(bme280SensorData);
+        RaspberryPiSensorData raspberryPiSensorData = new RaspberryPiSensorData(23.4);
+        raspberryPiSendSensorDataInfluxDBClient.send(raspberryPiSensorData);
 
-        final Query q = new Query("SELECT * FROM ambient_temperature GROUP BY host, sensor", influxDBTemplate.getDatabase());
+        final Query q = new Query("SELECT * FROM cpu_temperature GROUP BY host", influxDBTemplate.getDatabase());
         QueryResult queryResult = influxDBTemplate.query(q);
         InfluxDBResultMapper resultMapper = new InfluxDBResultMapper(); // thread-safe - can be reused
-        List<AmbientTemperature> cpuList = resultMapper.toPOJO(queryResult, AmbientTemperature.class);
-        AmbientTemperature ambientTemperature = cpuList.get(0);
-        assertEquals(Double.valueOf(23.0), ambientTemperature.getValue());
-        assertEquals(hostConfiguration.retrieveHOSTIPAddress(), ambientTemperature.getHost());
-        assertEquals("BME280SensorData", ambientTemperature.getSensor());
+        List<CPUTemperature> cpuList = resultMapper.toPOJO(queryResult, CPUTemperature.class);
+        CPUTemperature cpuTemperature = cpuList.get(0);
+        assertEquals(Double.valueOf(23.4), cpuTemperature.getValue());
+        assertEquals(hostConfiguration.retrieveHOSTIPAddress(), cpuTemperature.getHost());
+        assertEquals("RaspberryPiSensorData", cpuTemperature.getSensor());
     }
 }

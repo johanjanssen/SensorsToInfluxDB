@@ -1,10 +1,10 @@
-package com.example.sensors.bme280;
+package com.example.sensors.raspberrypi;
 
 import org.influxdb.annotation.Column;
 import org.influxdb.annotation.Measurement;
 
-@Measurement(name="ambient_temperature")
-public class AmbientTemperature {
+@Measurement(name="cpu_temperature")
+public class CPUTemperature {
     @Column(name = "host", tag = true)
     private String host;
 
