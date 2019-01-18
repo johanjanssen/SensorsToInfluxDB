@@ -192,3 +192,6 @@ buildNumber.properties
 
 *.iml
 .idea/*
+
+# Property file with values that shouldn't be shared
+src/main/resources/config/application.properties
